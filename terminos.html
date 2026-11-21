@@ -11,21 +11,21 @@
 <style>
 /* Mismo sistema visual que index.html: una columna de lectura con títulos en Poppins. */
 :root {
-  --bg: #fbfafa; --surface: #ffffff; --fg: #141213; --muted: #5e5759; --line: #e7e1e2;
-  --accent: #c8102e; --accent-soft: #fbe9ec;
+  --bg: #f6f2fb; --surface: #ffffff; --fg: #1e1035; --muted: #61577a; --line: #e6def0;
+  --accent: #c21bd1; --accent-soft: #f6e3f8;
   --display: "Poppins", "Avenir Next", "Segoe UI", system-ui, sans-serif;
   --body: "Source Serif 4", "Iowan Old Style", Georgia, serif;
   --ui: "Poppins", "Avenir Next", "Segoe UI", system-ui, sans-serif;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0e0c0d; --surface: #181516; --fg: #f3eff0; --muted: #a79fa1;
-    --line: #2c2627; --accent: #ff4d5e; --accent-soft: #2a1418; color-scheme: dark;
+    --bg: #1a0d2e; --surface: #2a1745; --fg: #f4effa; --muted: #b3a6c9;
+    --line: #3a2656; --accent: #e063f0; --accent-soft: #2b1640; color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #0e0c0d; --surface: #181516; --fg: #f3eff0; --muted: #a79fa1;
-  --line: #2c2627; --accent: #ff4d5e; --accent-soft: #2a1418; color-scheme: dark;
+  --bg: #1a0d2e; --surface: #2a1745; --fg: #f4effa; --muted: #b3a6c9;
+  --line: #3a2656; --accent: #e063f0; --accent-soft: #2b1640; color-scheme: dark;
 }
 body {
   background: var(--bg); color: var(--fg); margin: 0;
@@ -36,9 +36,10 @@ body {
 main { max-width: 42rem; margin: 0 auto; padding-block: 40px 72px; display: grid; gap: 36px; }
 header { display: grid; gap: 14px; }
 .brand { display: flex; align-items: center; gap: 10px; font: 600 18px/1 var(--display); color: var(--fg); text-decoration: none; }
-.bars { display: inline-flex; align-items: center; gap: 3px; height: 22px; }
-.bars span { width: 4px; border-radius: 2px; background: var(--accent); }
-.bars span:nth-child(1) { height: 22px; } .bars span:nth-child(2) { height: 14px; } .bars span:nth-child(3) { height: 9px; }
+/* Logo 2.5.0: micrófono-globo (Branding/generar.py), morado en claro y blanco en oscuro. */
+.mark { width: 20px; height: 26px; flex: none; color: #4a1ab8; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .mark { color: #fff; } }
+:root[data-theme="dark"] .mark { color: #fff; }
 .brand b { color: var(--accent); font-weight: 600; }
 h1 { font: 700 clamp(30px, 6vw, 42px)/1.15 var(--display); margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
 .lede { font-size: 19px; color: var(--muted); margin: 0; }
@@ -59,7 +60,7 @@ footer a { color: var(--muted); }
 
 <main>
   <header>
-    <a class="brand" href="./"><span class="bars" aria-hidden="true"><span></span><span></span><span></span></span>Lingo<b>Lyrics</b></a>
+    <a class="brand" href="./"><svg class="mark" viewBox="170 80 680 860" aria-hidden="true"><defs><linearGradient id="llonda" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF8A4C"/><stop offset="1" stop-color="#F0479B"/></linearGradient></defs><g transform="rotate(-12 512 500)" fill="currentColor"><rect x="272" y="150" width="480" height="380" rx="170"/><path d="M330 440 Q318 560 268 620 Q390 600 446 520 Z"/><rect x="378" y="262" width="276" height="42" rx="21" fill="url(#llonda)"/><rect x="378" y="330" width="206" height="42" rx="21" fill="url(#llonda)"/><rect x="378" y="398" width="246" height="42" rx="21" fill="url(#llonda)"/><rect x="440" y="556" width="144" height="48" rx="24" opacity="0.6"/><path d="M452 626 H572 L550 872 Q512 910 474 872 Z"/></g></svg>Lingo<b>Lyrics</b></a>
     <h1>Términos de uso</h1>
     <p class="lede">Las reglas para usar LingoLyrics, en pocas palabras.</p>
     <div class="meta"><span>Vigentes desde el 9 de noviembre de 2026</span><a href="#en">Read in English</a></div>

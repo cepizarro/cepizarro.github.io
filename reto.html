@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Te retaron a jugar una canción en LingoLyrics, la app para aprender inglés y portugués cantando.">
+<!-- Banner de Safari para abrir o descargar la app. Con la app instalada, el link ni siquiera llega aquí. -->
+<meta name="apple-itunes-app" content="app-id=6818664563">
+<title>Te retaron en LingoLyrics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&display=swap">
+<style>
+/* Misma paleta que privacidad.html: una tarjeta centrada con el reto y el botón de la App Store. */
+:root {
+  --bg: #f6f2fb; --surface: #ffffff; --fg: #1e1035; --muted: #61577a; --line: #e6def0;
+  --accent: #c21bd1; --accent-soft: #f6e3f8; --star: #e0a800;
+  --ui: "Poppins", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1a0d2e; --surface: #2a1745; --fg: #f4effa; --muted: #b3a6c9; --line: #3a2656;
+    --accent: #e063f0; --accent-soft: #2b1640; --star: #f5c542; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1a0d2e; --surface: #2a1745; --fg: #f4effa; --muted: #b3a6c9; --line: #3a2656;
+  --accent: #e063f0; --accent-soft: #2b1640; --star: #f5c542; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; min-height: 100vh; display: grid; place-items: center;
+  background: var(--bg); color: var(--fg); font: 16px/1.55 var(--ui);
+  padding: 32px max(16px, env(safe-area-inset-right, 0px)) 32px max(16px, env(safe-area-inset-left, 0px));
+}
+main {
+  width: 100%; max-width: 26rem; background: var(--surface); border: 1px solid var(--line);
+  border-radius: 24px; padding: 32px 24px; display: grid; gap: 18px; text-align: center;
+}
+.brand { display: flex; justify-content: center; align-items: center; gap: 8px; font-weight: 600; }
+/* Logo 2.5.0: micrófono-globo (Branding/generar.py), morado en claro y blanco en oscuro. */
+.mark { width: 20px; height: 26px; flex: none; color: #4a1ab8; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .mark { color: #fff; } }
+:root[data-theme="dark"] .mark { color: #fff; }
+.brand b { color: var(--accent); font-weight: 600; }
+h1 { margin: 0; font-size: clamp(24px, 6vw, 30px); line-height: 1.2; text-wrap: balance; }
+.song { margin: 0; color: var(--muted); }
+.song strong { color: var(--fg); font-weight: 600; }
+.points { margin: 0; font-size: 44px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+.points small { display: block; margin-top: 6px; font-size: 13px; font-weight: 500; color: var(--muted); }
+.stars { margin: 0; font-size: 24px; letter-spacing: 4px; color: var(--star); }
+.stars .off { color: var(--line); }
+.actions { display: grid; gap: 10px; margin-top: 6px; }
+.button {
+  display: block; padding: 14px 18px; border-radius: 999px; font-weight: 600; text-decoration: none;
+  background: var(--accent); color: #fff;
+}
+.button.secondary { background: var(--accent-soft); color: var(--accent); }
+.button:focus-visible { outline: 3px solid var(--fg); outline-offset: 3px; }
+.note { margin: 0; font-size: 13px; color: var(--muted); }
+[hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<main>
+  <div class="brand" aria-label="LingoLyrics"><svg class="mark" viewBox="170 80 680 860" aria-hidden="true"><defs><linearGradient id="llonda" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF8A4C"/><stop offset="1" stop-color="#F0479B"/></linearGradient></defs><g transform="rotate(-12 512 500)" fill="currentColor"><rect x="272" y="150" width="480" height="380" rx="170"/><path d="M330 440 Q318 560 268 620 Q390 600 446 520 Z"/><rect x="378" y="262" width="276" height="42" rx="21" fill="url(#llonda)"/><rect x="378" y="330" width="206" height="42" rx="21" fill="url(#llonda)"/><rect x="378" y="398" width="246" height="42" rx="21" fill="url(#llonda)"/><rect x="440" y="556" width="144" height="48" rx="24" opacity="0.6"/><path d="M452 626 H572 L550 872 Q512 910 474 872 Z"/></g></svg><span>Lingo<b>Lyrics</b></span></div>
+
+  <!-- Los datos del reto vienen en el link (?t=…&p=…). Solo se escriben como texto, nunca como HTML. -->
+  <section id="challenge" hidden>
+    <h1 id="title">Un amigo te reta</h1>
+    <p class="song">Jugando <strong id="song"></strong> de <span id="artist"></span>, en <span id="level"></span>.</p>
+    <p class="points"><span id="points"></span><small>puntos para superar</small></p>
+    <p class="stars" id="stars" aria-label=""></p>
+  </section>
+
+  <section id="fallback">
+    <h1>Aprende inglés y portugués cantando</h1>
+    <p class="song">Letra sincronizada, pronunciación, traducción y un modo juego con tus canciones favoritas.</p>
+  </section>
+
+  <div class="actions">
+    <a class="button" href="https://apps.apple.com/app/id6818664563">Descargar LingoLyrics</a>
+    <a class="button secondary" id="open" href="lingolyrics://reto" hidden>Ya la tengo: abrir el reto</a>
+  </div>
+  <p class="note">Gratis para iPhone. Para jugar el reto necesitas Apple Music o YouTube.</p>
+</main>
+<script>
+(function () {
+  var params = new URLSearchParams(location.search);
+  var title = (params.get("t") || "").trim().slice(0, 200);
+  var points = parseInt(params.get("p"), 10);
+  if (params.get("v") !== "1" || !title || !(points >= 0)) return;
+
+  var name = (params.get("n") || "").trim().slice(0, 24);
+  var stars = Math.max(0, Math.min(3, parseInt(params.get("st"), 10) || 0));
+  var level = params.get("lv") === "easy" ? "Fácil" : "Normal";
+
+  document.getElementById("title").textContent = (name || "Un amigo") + " te reta";
+  document.getElementById("song").textContent = "“" + title + "”";
+  document.getElementById("artist").textContent = (params.get("a") || "").trim().slice(0, 200);
+  document.getElementById("level").textContent = level;
+  // "1.980" como en la app (toLocaleString("es") no separa los miles de 4 cifras).
+  document.getElementById("points").textContent = String(points).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+  var starsEl = document.getElementById("stars");
+  starsEl.setAttribute("aria-label", stars + " de 3 estrellas");
+  for (var i = 1; i <= 3; i++) {
+    var star = document.createElement("span");
+    star.textContent = "★";
+    if (i > stars) star.className = "off";
+    starsEl.appendChild(star);
+  }
+
+  // Si el link se abrió en un navegador dentro de otra app, este botón abre LingoLyrics con el mismo reto.
+  var open = document.getElementById("open");
+  open.href = "lingolyrics://reto" + location.search;
+  open.hidden = false;
+
+  document.title = (name || "Un amigo") + " te reta en LingoLyrics";
+  document.getElementById("challenge").hidden = false;
+  document.getElementById("fallback").hidden = true;
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["4Q5BY8RN33.com.cristianpizarro.LingoLyrics"],
+        "components": [
+          { "/": "/reto*", "comment": "Retos del modo juego: abren la app con la canción y el puntaje a superar." }
+        ]
+      }
+    ]
+  }
+}
